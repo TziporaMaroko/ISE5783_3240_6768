@@ -1,5 +1,7 @@
 package primitives;
 import java.math.*;
+/** This class will represent a point
+ */
 public class Point {
 Double3 point;
 public Point(double x,double y, double z)
