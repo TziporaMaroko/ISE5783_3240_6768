@@ -1,40 +1,39 @@
 package primitives;
-import java.math.*;
 /** This class will represent a point
  */
 public class Point {
-Double3 point;
+protected final Double3 xyz;
 public Point(double x,double y, double z)
 {
-	point= new Double3(x,y,z);
+	xyz= new Double3(x,y,z);
 }
 Point(Double3 p)
 {
-	point=p;
+	xyz=p;
 }
 @Override
 public boolean equals(Object obj) {
 	if (this == obj) return true;
 	if (obj instanceof Point other)
-		return this.point.equals(other.point);
+		return this.xyz.equals(other.xyz);
 	return false;
 }
 @Override
-public String toString() { return point.toString(); }
+public String toString() { return xyz.toString(); }
 
 public Vector subtract(Point other)
 {
-	return new Vector(this.point.subtract(other.point));
+	return new Vector(this.xyz.subtract(other.xyz));
 }
 public Point add(Vector v)
 {
-	return new Point(this.point.add(v.point));
+	return new Point(this.xyz.add(v.xyz));
 }
 public double distanceSquared(Point p)
 {
-	return (this.point.d1-p.point.d1)*(this.point.d1-p.point.d1)
-			+(this.point.d2-p.point.d2)*(this.point.d2-p.point.d2)
-			+(this.point.d3-p.point.d3)*(this.point.d3-p.point.d3);
+	return (this.xyz.d1-p.xyz.d1)*(this.xyz.d1-p.xyz.d1)
+			+(this.xyz.d2-p.xyz.d2)*(this.xyz.d2-p.xyz.d2)
+			+(this.xyz.d3-p.xyz.d3)*(this.xyz.d3-p.xyz.d3);
 }
 public double distance(Point p)
 {
