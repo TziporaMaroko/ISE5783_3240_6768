@@ -8,7 +8,6 @@ public abstract class RadialGeometry implements Geometry {
 	protected double radius;
 
 	/**
-
 	Constructor
 	@param rad the radius of the geometry
 	 */

@@ -3,7 +3,7 @@ package geometries;
 import primitives.*;
 
 /**
- * The Cylinder class represents a cylinder in 3D Cartesian coordinate system.
+ * The Cylinder class represents a cylinder in 3D Cartesian coordinate system .
  * A cylinder is defined by its axisRay, height and radius.
  */
 public class Cylinder extends Tube {

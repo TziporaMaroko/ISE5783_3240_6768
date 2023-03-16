@@ -4,7 +4,7 @@ import primitives.*;
 
 /**
  * 
- * A triangle is a three-sided polygon
+ * A triangle is a three sided polygon
  */
 public class Triangle extends Polygon {
 	/*
