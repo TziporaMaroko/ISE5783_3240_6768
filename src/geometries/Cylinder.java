@@ -1,28 +1,43 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
-//A cylinder is a tube with a fixed height.
+/**
+ * The Cylinder class represents a cylinder in 3D Cartesian coordinate system.
+ * A cylinder is defined by its axisRay, height and radius.
+ */
 public class Cylinder extends Tube {
- private double height;
+    private double height;
 
- // Constructor
- public Cylinder(double h, Ray r, double rad) {
-     super(r, rad);
-     height = h;
- }
+    /**
+     * Constructs a new Cylinder object with given axisRay, radius and height.
+     *
+     * @param axisRay The axisRay of the Cylinder
+     * @param radius The radius of the Cylinder
+     * @param height The height of the Cylinder
+     */
+    public Cylinder(Ray axisRay, double radius, double height) {
+        super(axisRay, radius);
+        this.height = height;
+    }
 
- // Getter for height
- public double getHeight() {
-     return height;
- }
+    /**
+     * Returns the height of the Cylinder.
+     *
+     * @return The height of the Cylinder
+     */
+    public double getHeight() {
+        return height;
+    }
 
- // Overrides the getNormal method from the Tube class
- @Override
- public Vector getNormal(Point p) {
-     // The normal of a point on the surface of a cylinder is parallel to the axis of the cylinder
-     return null; // Not yet implemented
- }
+    /**
+     * Returns the normal vector to the cylinder at the given point.
+     * 
+     * @param p A point on the cylinder
+     * @return The normal vector to the cylinder at the given point
+     */
+    @Override
+    public Vector getNormal(Point p) {
+        return null;
+    }
 }
