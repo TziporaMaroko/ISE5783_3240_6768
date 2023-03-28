@@ -7,7 +7,7 @@ import primitives.*;
  * A cylinder is defined by its axisRay, height and radius.
  */
 public class Cylinder extends Tube {
-    private double height;
+    private final double height;
 
     /**
      * Constructs a new Cylinder object with given axisRay, radius and height.

@@ -6,7 +6,7 @@ import primitives.*;
  * A sphere is a three-dimensional shape that is perfectly round.
  */
 public class Sphere extends RadialGeometry {
-	private Point center;
+	private final Point center;
 
 	/**
 	 * 

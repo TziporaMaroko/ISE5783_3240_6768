@@ -8,7 +8,7 @@ import primitives.*;
  * The tube is represented by its radius and a @link Ray that passes through its center axis.
  */
 public class Tube extends RadialGeometry {
-    protected Ray axisRay;
+    protected final Ray axisRay;
 
     /**
      * Constructs a new tube with the specified @link Ray and radius.

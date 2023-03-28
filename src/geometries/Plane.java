@@ -8,8 +8,8 @@ import primitives.Vector;
  * A plane is a flat surface that extends infinitely in all directions.
  */
 public class Plane implements Geometry {
-	private Point q0; // A point on the plane
-	private Vector normal; // The plane's normal vector
+	private final Point q0; // A point on the plane
+	private final Vector normal; // The plane's normal vector
 
 	/**
 	 * 
