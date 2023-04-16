@@ -37,7 +37,7 @@ public class Cylinder extends Tube {
      * @return The normal vector to the cylinder at the given point
      */
     @Override
-    public Vector getNormal(Point p) {
+    public Vector getNormal(Point p){
     	 // Calculate the projection of the point onto the cylinder's axis ray
         double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
         Point o = axisRay.getP0().add(axisRay.getDir().scale(t));

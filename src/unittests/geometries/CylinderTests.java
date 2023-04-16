@@ -25,7 +25,7 @@ class CylinderTests {
 		 // TC01: Test normal vector on side of cylinder
         Cylinder c = new Cylinder(new Ray(new Point(0, 0, 0), new Vector(0, 1, 0)), 1.0, 2.0);
         Vector expected = new Vector(0, 0, 1);
-        assertEquals(expected, c.getNormal(new Point(1, 1, 1)), "Bad normal to cylinder side");
+        assertEquals(expected, c.getNormal(new Point(1, 0, 5)), "Bad normal to cylinder side");
 
         // TC02: Test normal vector on top of cylinder
         expected = new Vector(0, 1, 0);
@@ -48,6 +48,4 @@ class CylinderTests {
         Cylinder c3 = new Cylinder(r3, 5.0, 10.0);
         assertEquals("Bad normal to cylinder", new Vector(0, 0, -1), c3.getNormal(p3));
     }
-    	
-
 }
