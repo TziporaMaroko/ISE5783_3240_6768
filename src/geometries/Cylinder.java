@@ -38,6 +38,19 @@ public class Cylinder extends Tube {
      */
     @Override
     public Vector getNormal(Point p) {
-        return null;
+    	 // Calculate the projection of the point onto the cylinder's axis ray
+        double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
+        Point o = axisRay.getP0().add(axisRay.getDir().scale(t));
+
+        // Calculate the normal vector from the point to the projection onto the axis ray
+        Vector normal = p.subtract(o);
+
+        // If the point is on one of the caps, the normal vector should point outward from the caps
+        double distFromCap = p.distance(axisRay.getP0());
+        if (distFromCap <= radius || distFromCap >= radius + height) {
+            normal = normal.scale(-1);
+        }
+
+        return normal.normalize();
     }
 }
