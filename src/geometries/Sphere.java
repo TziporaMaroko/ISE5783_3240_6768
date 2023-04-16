@@ -39,7 +39,7 @@ public class Sphere extends RadialGeometry {
 	 */
 	@Override
 	public Vector getNormal(Point p) {
-// The normal of a point on the surface of a sphere is a vector from the center of the sphere to that point
-		return null; // Not yet implemented
-	}
+		// The normal of a point on the surface of a sphere is a vector from the center of the sphere to that point
+		return (p.subtract(center)).normalize();	
+		}
 }

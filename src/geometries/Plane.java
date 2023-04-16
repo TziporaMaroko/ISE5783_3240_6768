@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 
@@ -19,10 +20,17 @@ public class Plane implements Geometry {
 	 * @param p1 the second point on the plane
 	 * @param p2 the third point on the plane
 	 */
-	public Plane(Point p0, Point p1, Point p2) {
+	public Plane(Point p0, Point p1, Point p2)/*throws Exception*/ {
 		q0 = p0;
-		normal = null; // Not yet initialized
-	}
+        if(p0==p1 || p1==p2 || p2==p0)
+            throw new IllegalArgumentException("Two points converge");    
+        Vector v1=p0.subtract(p1);
+        Vector v2=p0.subtract(p2);
+        if((v1.crossProduct(v2)).equals(Double3.ZERO))
+    		throw new IllegalArgumentException("Two points or more exist in one line");
+        normal=v1.crossProduct(v2).normalize();
+    }
+
 
 	/**
 	 * 
@@ -43,7 +51,7 @@ public class Plane implements Geometry {
 	 * @return the normal vector of the plane
 	 */
 	public Vector getNormal() {
-		return null; //Not yet implemented
+		return normal;
 	}
 
 	/**

@@ -31,6 +31,6 @@ public class Triangle extends Polygon {
 	@Override
 	public Vector getNormal(Point point) {
 		// The normal of a point on the surface of a triangle is the normal of the plane containing the triangle
-		return null; // Not yet implemented
+		return super.getNormal(point);
 	}
 }

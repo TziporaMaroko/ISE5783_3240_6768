@@ -1,7 +1,11 @@
 
 package geometries;
 
-import primitives.*;
+import primitives.Vector;
+import geometries.RadialGeometry;
+import primitives.Point;
+import primitives.Ray;
+
 
 /**
  * The Tube class represents a tube in 3D Cartesian coordinate system.
@@ -35,8 +39,10 @@ public class Tube extends RadialGeometry {
      */
 	@Override
 	public Vector getNormal(Point p) {
-		// TODO Auto-generated method stub
-		return null;
+		double t=(axisRay.getDir()).dotProduct(p.subtract(axisRay.getP0()));
+		Vector v=(axisRay.getDir()).scale(t);
+		Point o=(axisRay.getP0()).add(v);
+	    return (p.subtract(o)).normalize();
 	}
 }
 
