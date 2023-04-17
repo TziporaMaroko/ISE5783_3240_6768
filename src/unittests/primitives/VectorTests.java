@@ -28,9 +28,20 @@ class VectorTests {
 		// ============ Equivalence Partitions Tests ==============	
 		assertTrue((v1.add(new Vector(1, -2, -3)).equals(new Vector(2, 0, 0))),"ERROR: addVector() does not work correctly");
 		assertTrue((v1.add(v2).equals(new Vector(-1, -2, -3))),"ERROR: Point - Point does not work correctly");
-		assertTrue((v1.subtract(v2).equals(new Vector(3,6,9))),"ERROR: Point - Point does not work correctly");
+		// =============== Boundary Values Test ==================
+		assertThrows(IllegalArgumentException.class, () -> v1.add(v1.scale(-1)),
+		"subtract() for same vector does not throw an exception");
+	}
+	
+	/**
+	 * Test method for {@link primitives.Vector#add(primitives.Vector)}.
+	 */
+	@Test
+	void testSubtractVector() {
+		// ============ Equivalence Partitions Test ==============	
+		assertTrue((v1.subtract(v2).equals(new Vector(3,6,9))),"ERROR: Vector - Vector does not work correctly");
 		
-		// =============== Boundary Values Tests ==================
+		// =============== Boundary Values Test ==================
 		assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
 		"subtract() for same vector does not throw an exception");
 	}

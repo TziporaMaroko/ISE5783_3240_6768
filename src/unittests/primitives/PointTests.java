@@ -9,6 +9,7 @@ import static primitives.Util.isZero;
 import org.junit.jupiter.api.Test;
 
 import primitives.Point;
+import primitives.Util;
 import primitives.Vector;
 
 /**
@@ -57,6 +58,9 @@ class PointTests {
 		// ============ Equivalence Partitions Tests ==============
 		//the distance between two points
 		assertTrue(isZero(p1.distance(p2) - Math.sqrt(3)),"ERROR: distance() wrong value");
+		// =============== Boundary Values Tests ==================
+        //zero-distance(point-the same point)
+		//assertTrue(Util.isZero(p1.distance(p1)),"Bad distance between points");
 	}
 
 }
