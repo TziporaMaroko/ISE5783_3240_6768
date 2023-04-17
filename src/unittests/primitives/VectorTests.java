@@ -33,7 +33,6 @@ class VectorTests {
 		// =============== Boundary Values Tests ==================
 		assertThrows(IllegalArgumentException.class, () -> v1.subtract(v1),
 		"subtract() for same vector does not throw an exception");
-				 
 	}
 
 	/**

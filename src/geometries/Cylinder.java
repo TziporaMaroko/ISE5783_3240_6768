@@ -38,19 +38,19 @@ public class Cylinder extends Tube {
      */
     @Override
     public Vector getNormal(Point p){
-    	 // Calculate the projection of the point onto the cylinder's axis ray
-    	double t=(axisRay.getDir()).dotProduct(p.subtract(axisRay.getP0()));
-		Vector v=(axisRay.getDir()).scale(t);
-		Point o=(axisRay.getP0()).add(v);
-        // Calculate the normal vector from the point to the projection onto the axis ray
-        Vector normal = p.subtract(o);
-
-        // If the point is on one of the caps, the normal vector should point outward from the caps
-        double distFromCap = p.distance(axisRay.getP0());
-        if (distFromCap <= radius || distFromCap >= radius + height) {
-            normal = normal.scale(-1);
+    	Point topCenter= axisRay.getP0().add(axisRay.getDir().scale(height));
+    	//if the point is on the center of one of the caps, the normal vector should point outward from the caps
+        if(p.equals(axisRay.getP0())||p.equals(topCenter)) {
+        	return axisRay.getDir().normalize();
         }
-
-        return normal.normalize();
+    	// If the point is on one of the caps, the normal vector should point outward from the caps
+        Vector checkBottom= p.subtract(axisRay.getP0());
+        Vector checkTop= p.subtract(topCenter);
+        if((checkBottom.length()<radius && checkBottom.dotProduct(axisRay.getDir())==0)
+        		|| (checkTop.length()<radius && checkTop.dotProduct(axisRay.getDir())==0)) {
+        	return axisRay.getDir().normalize();
+        }
+        //else- the point is on the sides
+        return super.getNormal(p);
     }
 }

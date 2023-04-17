@@ -34,7 +34,7 @@ class PointTests {
 	 */
 	@Test
 	void testAdd() {
-		// ============ Boundary values Tests ==============
+		// ============ Equivalence Partitions Tests ==============
 		//regular add between point and vector
 	    assertTrue((p1.add(new Vector(-1, -2, -3)).equals(new Point(0, 0, 0))),"ERROR: Point + Vector does not work correctly");
 	}
