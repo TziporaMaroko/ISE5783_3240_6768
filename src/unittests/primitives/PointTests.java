@@ -12,7 +12,7 @@ import primitives.Point;
 import primitives.Vector;
 
 /**
- * @author ester 
+ * @author ester & tzipora 😎 
  *
  */
 class PointTests {
@@ -56,7 +56,7 @@ class PointTests {
 	void testDistance() {
 		// ============ Equivalence Partitions Tests ==============
 		//the distance between two points
-		assertTrue(isZero(p1.distance(p2) - 5),"ERROR: distance() wrong value");
+		assertTrue(isZero(p1.distance(p2) - Math.sqrt(3)),"ERROR: distance() wrong value");
 	}
 
 }

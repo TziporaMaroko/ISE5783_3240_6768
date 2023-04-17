@@ -15,7 +15,7 @@ import geometries.Plane;
 import geometries.Triangle;
 
 /**
- * @author ester
+ * @author ester & tzipora 😎
  *
  */
 class PlaneTests {

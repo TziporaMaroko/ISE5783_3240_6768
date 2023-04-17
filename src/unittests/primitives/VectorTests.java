@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import primitives.Vector;
 
 /**
- * @author ester
+ * @author ester & tzipora 😎
  *
  */
 class VectorTests {
@@ -56,7 +56,7 @@ class VectorTests {
 		// ============ Equivalence Partitions Tests ==============
 		assertTrue(isZero(v1.dotProduct(v2)+28), "ERROR: dotProduct() wrong value");
 		// =============== Boundary Values Tests ==================
-		assertTrue(isZero(v1.dotProduct(v1)), "ERROR: dotProduct() for orthogonal vectors is not zero");	 
+		assertTrue(isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");	 
 	}
 
 	/**
@@ -65,16 +65,16 @@ class VectorTests {
 	 @Test
 	 public void testCrossProduct() {
 	 // ============ Equivalence Partitions Tests ==============
-	 Vector vr = v1.crossProduct(v2);
+	 Vector vr = v1.crossProduct(v3);
 	 // TC01: Test that length of cross-product is proper (orthogonal vectors taken
 	 // for simplicity)
-	 assertEquals(v1.length() * v2.length(), vr.length(), 0.00001, "crossProduct() wrong result length");
+	 assertEquals(v1.length() * v3.length(), vr.length(), 0.00001, "crossProduct() wrong result length");
 	 // TC02: Test cross-product result orthogonality to its operands
 	 assertTrue(isZero(vr.dotProduct(v1)), "crossProduct() result is not orthogonal to 1st operand");
 	 assertTrue(isZero(vr.dotProduct(v2)), "crossProduct() result is not orthogonal to 2nd operand");
 	 // =============== Boundary Values Tests ==================
 	 // TC11: test zero vector from cross-productof co-lined vectors
-	 assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v3),
+	 assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v2),
 	 "crossProduct() for parallel vectors does not throw an exception");
 	 }
 
@@ -84,6 +84,7 @@ class VectorTests {
 	 */
 	@Test
 	void testLengthSquared() {
+		 // ============ Equivalence Partitions Tests ==============
 		assertTrue(isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
 	}
 
@@ -92,6 +93,7 @@ class VectorTests {
 	 */
 	@Test
 	void testLength() {
+		 // ============ Equivalence Partitions Tests ==============
 		assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
 	}
 
@@ -101,10 +103,11 @@ class VectorTests {
 	@Test
 	void testNormalize() {
 		Vector v= v1.normalize();
+		 // ============ Equivalence Partitions Tests ==============
 		assertTrue(isZero(v.length()-1), "ERROR: the normalized vector is not a unit vector");
 		assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v),
 				"ERROR: the normalized vector is not parallel to the original one");
-		assertThrows(IllegalArgumentException.class, () -> v1.dotProduct(v),
+		assertFalse(v1.dotProduct(v)<0 ,
 				"ERROR: the normalized vector is opposite to the original one");
 	}
 

@@ -14,7 +14,7 @@ import primitives.Point;
 import primitives.Vector;
 
 /**
- * @author ester
+ * @author ester & tzipora 😎
  *
  */
 class TriangleTests {
