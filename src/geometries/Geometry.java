@@ -5,7 +5,7 @@ The Geometry interface represents a geometric object that has a normal vector at
 package geometries;
 import primitives.*;
 
-public interface Geometry {
+public interface Geometry extends Intersectable{
 
 	/**
 	 * Returns the normal vector to the geometry object at a given point.

@@ -37,6 +37,15 @@ public class Ray {
     }
 
     /**
+	 * a function that returns a vector that scale
+	 * @param t
+	 * @return vector
+	 */
+	public Point getPoint(double t) {
+		return p0.add(dir.scale(t));
+	}
+	
+    /**
      * Checks whether this ray is equal to the specified object.
      *
      * @param obj the object to compare to

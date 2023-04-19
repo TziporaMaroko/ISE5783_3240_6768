@@ -1,7 +1,11 @@
 package geometries;
 
+import java.util.List;
+
 import primitives.Double3;
 import primitives.Point;
+import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 /**
@@ -63,7 +67,34 @@ public class Plane implements Geometry {
 	 */
 	@Override
 	public Vector getNormal(Point p) {
-// The normal of a point on a plane is the same as the normal of the plane itself
+		// The normal of a point on a plane is the same as the normal of the plane itself
 		return getNormal();
+	}
+	
+	@Override
+	public List<Point> findIntersections(Ray myRay) {
+		double nv = normal.dotProduct(myRay.getDir());
+		//The plane is parallel to the ray
+		if (Util.isZero(nv))
+		{
+			return null;
+		}
+		
+		try 
+		{
+			Vector qSubtractP0 = q0.subtract(myRay.getP0());
+			double t = Util.alignZero((normal.dotProduct(qSubtractP0))/nv);
+
+			if(t <= 0)//no intersections-the ray goes to the opposite side
+			{
+				return null;
+			}
+			
+			return List.of(myRay.getPoint(t));
+		}
+		catch(Exception ex) 
+		{
+			return null;
+		}
 	}
 }
