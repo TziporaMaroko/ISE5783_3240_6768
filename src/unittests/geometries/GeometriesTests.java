@@ -38,10 +38,15 @@ class GeometriesTests extends Geometries {
 	    assertEquals( 2, collection.findIntersections(new Ray(new Point(-4, -3, 2), new Vector(9,5,-1))).size(),"wrong number of intersactions");
 	    
 		
-		assertEquals(new Geometries(), collection,"An empty body collection must return null" );
+	 
 		
-	     // =============== Boundary Values Tests ==================
-		//=====No cut shape =====//
+	    // =============== Boundary Values Tests ==================
+	    //=====Empty body collection=====//
+	    Geometries collectionEmpty= new Geometries();
+		assertNull(collectionEmpty.findIntersections(new Ray(new Point(-4, -3, 2), new Vector(9,5,-1))),"An empty body collection must return null");
+	    
+	    
+	    //=====No cut shape =====//
 		assertNull(collection.findIntersections(new Ray(new Point(0, -8, 0), new Vector(-10,-1,0))),"No cut shape must return 0");
 		
 		

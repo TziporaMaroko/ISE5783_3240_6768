@@ -65,5 +65,4 @@ public class Triangle extends Polygon {
 			return null; //there is no instruction point
 		return null;//opposite signs
 	}
-    }
 }
