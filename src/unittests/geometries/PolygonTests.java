@@ -101,37 +101,40 @@ public class PolygonTests {
 
        // ============ Equivalence Partitions Tests ====================
       
-       // TC01: The ray cuts the plane within the boundaries of the triangle
+       // TC01: The ray cuts the plane within the boundaries of the polygon
        Ray ray = new Ray(new Point(-2.09, 2.69, 2.3), new Vector(4.09, -0.69, -2.3));
-       assertEquals( 1, pol.findIntersections(ray).size(),"the intersection point is in the triangle - need 1 intersections");
-     
-       // TC02: The ray cuts the plane In front of the side of the triangle
-       ray = new Ray(new Point(6.94, -2.39, 0), new Vector(-2.68, 5.72, 0));
-       assertNull( pol.findIntersections(ray),"the intersection point is out of the triangle - need 0 intersections");
+       assertEquals( 1, pol.findIntersections(ray).size(),"the intersection point is in the polygon - need 1 intersections");
+       assertEquals( new Point(2,2,0), (pol.findIntersections(ray)).get(0),"incorrect intersection!!!");
 
-       // TC03: The ray intersects the plane on which the triangle is in front of the vertex
+      
+       // TC02: The ray cuts the plane In front of the side of the polygon
+       ray = new Ray(new Point(6.94, -2.39, 0), new Vector(-2.68, 5.72, 0));
+       assertNull( pol.findIntersections(ray),"the intersection point is out of the polygon - need 0 intersections");
+
+       // TC03: The ray intersects the plane on which the polygon is in front of the vertex
        ray = new Ray(new Point(-0.93, 6.2, 0), new Vector(2.54, 2.23, 0));
-       assertNull(pol.findIntersections(ray),"the intersection point is out of the triangle - need 0 intersections");
+       assertNull(pol.findIntersections(ray),"the intersection point is out of the polygon - need 0 intersections");
 
        //TC04: regular pentagon test case
-       Polygon pol1 = new Polygon(new Point(-4, 2, 0), new Point(-2, -4, 0), new Point(3, -2, 0), new Point(-3,5,0));
+       Polygon pol1 = new Polygon(new Point(0, 1, 0), new Point(2, 6, 0), new Point(5, 0, 0), new Point(2,0,0));
        ray = new Ray(new Point(1, 0, -1), new Vector(1, 2, 3));
-       assertEquals( new Point(1.33,0.67,0), (pol1.findIntersections(ray)).get(0),"incorrect intersection!!!");
+       assertEquals( 1, pol1.findIntersections(ray).size(),"the intersection point is in the polygon - need 1 intersections");
+       assertEquals( new Point(4.0/3,2.0/3,0), (pol1.findIntersections(ray)).get(0),"incorrect intersection!!!");
 
 
        // =============== Boundary Values Tests ==================
 
-       // TC11: The ray intersects on the side of the triangle
+       // TC11: The ray intersects on the side of the polygon
        ray = new Ray(new Point(4.26, -1.28, 2.14), new Vector(-0.15, 3.07, -2.14));
        assertNull( pol.findIntersections(ray),"on the side - need 0 intersections");
        
-       // TC12: The ray intersects on one of the vertices of the triangle
+       // TC12: The ray intersects on one of the vertices of the polygon
        ray = new Ray(new Point(3.7, -0.71, 1.44), new Vector(1.3, 0.71, -1.44));
        assertNull( pol.findIntersections(ray),"on the vertex - need 0 intersections");
        
-       // TC13: The ray On the straight line continuing the side of the triangle
+       // TC13: The ray On the straight line continuing the side of the polygon
        ray = new Ray(new Point(3.86, -4.95, 0), new Vector(2.97, 1.28, 0));
-       assertNull( pol.findIntersections(ray),"the intersection point is out of the triangle - need 0 intersections");
+       assertNull( pol.findIntersections(ray),"the intersection point is out of the polygon - need 0 intersections");
 
 }
 
