@@ -8,93 +8,98 @@ import static primitives.Util.*;
 
 /**
  * @author tzipora and ester:)
- * Camera class
+ * 
+ *         This class represents a camera in a 3D space.
+ * 
+ *         The camera defines the view of the scene and is responsible for
+ *         generating rays that pass through the pixels
+ * 
+ *         in the view plane and into the scene.
  */
 public class Camera {
-	private Point p0;
-	private Vector vUp;
-	private Vector vRight;
-	private Vector vTo;
-	private double width;
-	private double height;
-	private double distance;
-	
+	private Point p0; // The location of the camera in 3D space
+	private Vector vUp; // The up vector of the camera
+	private Vector vRight; // The right vector of the camera
+	private Vector vTo; // The view vector of the camera
+	private double width; // The width of the view plane
+	private double height; // The height of the view plane
+	private double distance; // The distance between the camera and the view plane
+
 	/**
-	 * ctor
-	 * @param p0 
-	 * @param vTo
-	 * @param vUp
+	 * 
+	 * Constructs a new camera.
+	 * @param p0  the location of the camera in 3D space.
+	 * @param vTo the view vector of the camera.	 * 
+	 * @param vUp the up vector of the camera.	 * 
+	 * @throws IllegalArgumentException if the up vector is not orthogonal to the
+	 *                                  view vector.
 	 */
-	public Camera(Point p0, Vector vTo, Vector vUp) /*throws Exception*/{
-		if(!isZero(vTo.dotProduct(vUp))) 
-			throw new IllegalArgumentException("vUp is not ortogonal to vTo");
+	public Camera(Point p0, Vector vTo, Vector vUp) throws IllegalArgumentException {
+		if (!isZero(vTo.dotProduct(vUp))) {
+			throw new IllegalArgumentException("vUp is not orthogonal to vTo");
+		}
 
 		this.vTo = vTo.normalize();
 		this.vUp = vUp.normalize();
 		vRight = (vTo.crossProduct(vUp)).normalize();
-		
+
 		this.p0 = p0;
 	}
-	
+
 	/**
-	 * sets the sizes of view plane
-	 * @param width
-	 * @param height
-	 * @return the camera
+	 * 
+	 * Sets the sizes of the view plane.	 * 
+	 * @param width  the width of the view plane.
+	 * @param height the height of the view plane.
+	 * @return the camera object.
 	 */
-	public Camera setVPSize(double width, double height){
+	public Camera setVPSize(double width, double height) {
 		this.width = width;
 		this.height = height;
 		return this;
 	}
-	
+
 	/**
-	 * sets the distance between the camera and the view plane
-	 * @param distance
-	 * @return the camera
+	 *  Sets the distance between the camera and the view plane.
+	 * @param distance the distance between the camera and the view plane.
+	 * @return the camera object.
 	 */
-	public Camera setVPDistance(double distance){
+	public Camera setVPDistance(double distance) {
 		this.distance = distance;
 		return this;
 	}
-	
+
 	/**
+	 * Constructs a ray that passes through a specific pixel in the view plane.
 	 * 
-	 * @param nX
-	 * @param nY
-	 * @param j
-	 * @param i
-	 * @return
+	 * @param nX the number of pixels in the x direction.
+	 * @param nY the number of pixels in the y direction.
+	 * @param j  the index of the pixel in the x direction.
+	 * @param i  the index of the pixel in the y direction.
+	 * @return a Ray object that passes through the specified pixel.
 	 */
-	public Ray constructRay(int nX, int nY, int j, int i)/*throws Exception*/{//constructRayThroughPixel
-return null;
-		//		Point Pc;
-//		if (isZero(distance))
-//			Pc=p0;
-//		else
-//			Pc=p0.add(vTo.scale(distance));
-//		
-//		double Ry= height/nY;
-//		double Rx=width/nX;
-//		double Yi=(i-(nY-1)/2d)*Ry;///////////////
-//		double Xj=(j-(nX-1)/2d)*Rx;
-//		
-//		if(isZero(Xj) && isZero(Yi))
-//			return new Ray (p0, Pc.subtract(p0));
-//		
-//		Point Pij = Pc;
-//		
-//		if(!isZero(Xj))
-//			Pij = Pij.add(vRight.scale(Xj));
-//		
-//		if(!isZero(Yi))
-//			Pij = Pij.add(vUp.scale(-Yi));
-//		
-//		Vector Vij = Pij.subtract(p0);
-//		
-//		if(Pij.equals(p0))
-//			return new Ray(p0, new Vector(Pij.getX(), Pij.getY(), Pij.getZ()));
-//		return new Ray(p0, Vij);
+	public Ray constructRay(int nX, int nY, int j, int i) {
+		Point pC;
+		if (isZero(distance))
+			pC = p0;
+		else
+			pC = p0.add(vTo.scale(distance));
+
+		Point pIJ = pC;
+		double rY = height / nY; // height of every pixel
+		double rX = width / nX; // width of every pixel
+		double yI = -(i - (nY - 1) / 2d) * rY;
+		double xJ = (j - (nX - 1) / 2d) * rX;
+
+		if (!isZero(xJ))
+			pIJ = pIJ.add(vRight.scale(xJ));
+
+		if (!isZero(yI))
+			pIJ = pIJ.add(vUp.scale(yI));
+
+		if (pIJ.equals(p0))
+			return new Ray(p0, new Vector(pIJ.getX(), pIJ.getY(), pIJ.getZ()));
+		return new Ray(p0, pIJ.subtract(p0));
 	}
 
 	/**
@@ -147,4 +152,3 @@ return null;
 	}
 
 }
-

@@ -1,4 +1,4 @@
-package unittests.renderer;
+package unittests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +10,7 @@ import renderer.Camera;
 /**
  * Testing Camera Class
  * 
- * @author tzipora & ester
+ * @author Dan
  *
  */
 class CameraTest {
