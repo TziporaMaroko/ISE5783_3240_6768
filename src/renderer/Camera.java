@@ -34,7 +34,7 @@ public class Camera {
 	 * @throws IllegalArgumentException if the up vector is not orthogonal to the
 	 *                                  view vector.
 	 */
-	public Camera(Point p0, Vector vTo, Vector vUp) throws IllegalArgumentException {
+	public Camera(Point p0, Vector vTo, Vector vUp) {
 		if (!isZero(vTo.dotProduct(vUp))) {
 			throw new IllegalArgumentException("vUp is not orthogonal to vTo");
 		}
