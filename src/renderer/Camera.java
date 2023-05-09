@@ -97,7 +97,7 @@ public class Camera {
 		if (!isZero(yI))
 			pIJ = pIJ.add(vUp.scale(yI));
 
-		if (pIJ.equals(p0))
+		if (pIJ.equals(p0))//if distance is zero and piont axactly in the middle...
 			return new Ray(p0, new Vector(pIJ.getX(), pIJ.getY(), pIJ.getZ()));
 		return new Ray(p0, pIJ.subtract(p0));
 	}
