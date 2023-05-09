@@ -6,6 +6,8 @@ package primitives;
 public class Point {
     protected final Double3 xyz;
 
+    /** Zero point = (0,0,0) */
+    public static final Point ZERO = new Point(0,0,0);
     /**
      * Constructs a new point with the given Cartesian coordinates.
      * @param x The x-coordinate of the point.

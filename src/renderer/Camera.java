@@ -4,7 +4,13 @@
 package renderer;
 
 import primitives.*;
+import scene.Scene;
+
 import static primitives.Util.*;
+
+import java.util.MissingResourceException;
+
+import geometries.Geometries;
 
 /**
  * @author tzipora and ester:)
@@ -25,12 +31,16 @@ public class Camera {
 	private double height; // The height of the view plane
 	private double distance; // The distance between the camera and the view plane
 
+	private ImageWriter writer;
+	private RayTracerBase rayTracer;
+
 	/**
 	 * 
 	 * Constructs a new camera.
+	 * 
 	 * @param p0  the location of the camera in 3D space.
-	 * @param vTo the view vector of the camera.	 * 
-	 * @param vUp the up vector of the camera.	 * 
+	 * @param vTo the view vector of the camera. *
+	 * @param vUp the up vector of the camera. *
 	 * @throws IllegalArgumentException if the up vector is not orthogonal to the
 	 *                                  view vector.
 	 */
@@ -48,7 +58,8 @@ public class Camera {
 
 	/**
 	 * 
-	 * Sets the sizes of the view plane.	 * 
+	 * Sets the sizes of the view plane. *
+	 * 
 	 * @param width  the width of the view plane.
 	 * @param height the height of the view plane.
 	 * @return the camera object.
@@ -60,13 +71,75 @@ public class Camera {
 	}
 
 	/**
-	 *  Sets the distance between the camera and the view plane.
+	 * Sets the distance between the camera and the view plane.
+	 * 
 	 * @param distance the distance between the camera and the view plane.
 	 * @return the camera object.
 	 */
 	public Camera setVPDistance(double distance) {
 		this.distance = distance;
 		return this;
+	}
+
+	public Camera setImageWriter(ImageWriter writer) {
+		this.writer = writer;
+		return this;
+	}
+
+	public Camera setRayTracer(RayTracerBase rayTracerBase) {
+		this.rayTracer = rayTracerBase;
+		return this;
+	}
+
+	public void renderImage() {
+		if (writer == null)
+			throw new MissingResourceException("this function must have values in all the fileds", "ImageWriter",
+					"imageWriter");
+		if (rayTracer == null)
+			throw new MissingResourceException("this function must have values in all the fileds", "RayTracerBase",
+					"rayTracer");
+
+		for (int i = 0; i < writer.getNx(); i++) {
+			for (int j = 0; j < writer.getNy(); j++) {
+				Color rayColor = castRay(j, i);
+				writer.writePixel(j, i, rayColor);
+			}
+		}
+	}
+	
+	private Color castRay(int j, int i) {
+		Ray ray= constructRay(writer.getNx(),writer.getNy(), j, i);
+		return rayTracer.traceRay(ray);
+	}
+	/**
+	 * A function that creates a grid of lines
+	 * 
+	 * @param interval int value
+	 * @param color    Color value
+	 */
+	public void printGrid(int interval, Color color) {
+		if (writer == null)
+			throw new MissingResourceException("this function must have values in all the fileds", "ImageWriter",
+					"imageWriter");
+
+		for (int i = 0; i < writer.getNx(); i++) {
+			for (int j = 0; j < writer.getNy(); j++) {
+				if (i % interval == 0 || j % interval == 0)
+					writer.writePixel(i, j, color);
+			}
+		}
+
+	}
+
+	/**
+	 * A function that finally creates the image. This function delegates the
+	 * function of a class imageWriter
+	 */
+	public void writeToImage() {
+		if (writer == null)
+			throw new MissingResourceException("this function must have values in all the fileds", "ImageWriter",
+					"imageWriter");
+		writer.writeToImage();//delegation
 	}
 
 	/**
@@ -97,7 +170,7 @@ public class Camera {
 		if (!isZero(yI))
 			pIJ = pIJ.add(vUp.scale(yI));
 
-		if (pIJ.equals(p0))//if distance is zero and piont axactly in the middle...
+		if (pIJ.equals(p0))// if distance is zero and piont axactly in the middle...
 			return new Ray(p0, new Vector(pIJ.getX(), pIJ.getY(), pIJ.getZ()));
 		return new Ray(p0, pIJ.subtract(p0));
 	}
