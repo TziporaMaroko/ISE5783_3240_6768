@@ -1,4 +1,4 @@
-package unittests;
+package unittests.renderer;
 import primitives.*;
 import renderer.Camera;
 import java.util.LinkedList;
@@ -31,7 +31,7 @@ class CameraRayIntegration {
      * @param nX how many pixels in line
      * @param nY how many pixels in column
      */
-    private void assertCountIntersections(int expected, Camera cam, Intersectable geo, int nX, int nY) {
+    static private void assertCountIntersections(int expected, Camera cam, Intersectable geo, int nX, int nY) {
         int count = 0;
 
         cam.setVPSize(3, 3);

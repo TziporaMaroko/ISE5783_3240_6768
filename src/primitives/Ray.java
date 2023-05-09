@@ -1,5 +1,9 @@
 package primitives;
 
+import java.util.List;
+
+import geometries.Intersectable;
+
 /**
  * Represents a ray in 3D space, consisting of a starting point and a direction vector.
  */
@@ -67,5 +71,23 @@ public class Ray {
     @Override
     public String toString() {
         return "Ray [p0=" + p0 + ", dir=" + dir + "]";
+    }
+    
+    public Point findClosestPoint(List<Point> points)
+    {
+    	if(points==null||points.isEmpty())
+    		return null;
+    	Point minPoint=points.get(0);
+    	double minDis= p0.distance(minPoint);
+    	double tmp;
+    	for (int i=1; i<points.size(); i++) 
+    	{
+    		tmp=p0.distance(points.get(i));
+    		if(tmp<minDis) {
+    			minDis=tmp;
+    			minPoint=points.get(i);
+    		}		
+    	}
+    	return minPoint;	
     }
 }
