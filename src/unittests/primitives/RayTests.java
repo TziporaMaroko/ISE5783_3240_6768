@@ -38,14 +38,16 @@ class RayTests {
 	//The first point is closest to the beginning of the foundation
 	points = List.of(p1,p2,p3);
 	assertEquals(p1, ray.findClosestPoint(points),"p1 must be returned");
-
+	
+	points = List.of(p2,p3,p1);
 	//The last point is closest to the beginning of the foundation
-	assertEquals(p3, ray.findClosestPoint(points),"p3 must be returned");
+	assertEquals(p1, ray.findClosestPoint(points),"p3 must be returned");
 
 	
 	// ============ Equivalence Partitions Tests ==============
 	//A point in the middle of the list is closest to the beginning of the fund
-	assertEquals(p2, ray.findClosestPoint(points),"p2 must be returned");
+	points = List.of(p2,p1,p3);
+	assertEquals(p1, ray.findClosestPoint(points),"p2 must be returned");
 
 	}
 

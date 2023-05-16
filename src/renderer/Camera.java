@@ -81,36 +81,72 @@ public class Camera {
 		return this;
 	}
 
+	/**
+	 * 
+	 * Sets the image writer for the camera.
+	 * 
+	 * @param writer The image writer to be set.
+	 * @return The Camera object itself for method chaining.
+	 */
 	public Camera setImageWriter(ImageWriter writer) {
 		this.writer = writer;
 		return this;
 	}
 
+	/**
+	 * 
+	 * Sets the ray tracer for the camera.
+	 * 
+	 * @param rayTracerBase The ray tracer to be set.
+	 * @return The Camera object itself for method chaining.
+	 */
 	public Camera setRayTracer(RayTracerBase rayTracerBase) {
 		this.rayTracer = rayTracerBase;
 		return this;
 	}
 
+	/**
+	 * 
+	 * Renders the image using the configured image writer and ray tracer.
+	 * 
+	 * Throws an exception if the image writer or ray tracer is not set.
+	 */
 	public void renderImage() {
+		// Check if the image writer is set
 		if (writer == null)
-			throw new MissingResourceException("this function must have values in all the fileds", "ImageWriter",
+			throw new MissingResourceException("This function must have values in all the fields", "ImageWriter",
 					"imageWriter");
+
+		// Check if the ray tracer is set
 		if (rayTracer == null)
-			throw new MissingResourceException("this function must have values in all the fileds", "RayTracerBase",
+			throw new MissingResourceException("This function must have values in all the fields", "RayTracerBase",
 					"rayTracer");
 
-		for (int i = 0; i < writer.getNx(); i++) {
-			for (int j = 0; j < writer.getNy(); j++) {
+		int nx = writer.getNx();
+		int ny = writer.getNy();
+
+		// Iterate over each pixel and cast rays
+		for (int i = 0; i < nx; i++) {
+			for (int j = 0; j < ny; j++) {
 				Color rayColor = castRay(j, i);
 				writer.writePixel(j, i, rayColor);
 			}
 		}
 	}
-	
+
+	/**
+	 * 
+	 * Casts a ray from the camera's position to the specified pixel coordinates.
+	 * 
+	 * @param j The horizontal pixel coordinate.
+	 * @param i The vertical pixel coordinate.
+	 * @return The color of the ray.
+	 */
 	private Color castRay(int j, int i) {
-		Ray ray= constructRay(writer.getNx(),writer.getNy(), j, i);
+		Ray ray = constructRay(writer.getNx(), writer.getNy(), j, i);
 		return rayTracer.traceRay(ray);
 	}
+
 	/**
 	 * A function that creates a grid of lines
 	 * 
@@ -139,7 +175,7 @@ public class Camera {
 		if (writer == null)
 			throw new MissingResourceException("this function must have values in all the fileds", "ImageWriter",
 					"imageWriter");
-		writer.writeToImage();//delegation
+		writer.writeToImage();// delegation
 	}
 
 	/**
