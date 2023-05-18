@@ -11,8 +11,7 @@ import primitives.Point;
  * @author tzipora and ester:)
  *
  */
-public class AmbientLight {
-	private Color intensity;
+public class AmbientLight extends Light{
 
 	/**
 	 * constructor that save the intensity=Ia*Ka
@@ -21,7 +20,7 @@ public class AmbientLight {
 	 * @param Ka double value
 	 */
 	public AmbientLight(Color iA, Double3 kA) {
-		intensity=iA.scale(kA);
+		super(iA.scale(kA));
 	}
 
 	/**
@@ -29,17 +28,9 @@ public class AmbientLight {
 	 * 
 	 * @param Ka double value
 	 */
-	public AmbientLight(Double kA) {
-		intensity=intensity.scale(kA);
+	public AmbientLight(Color iA,Double kA) {
+		super(iA.scale(kA));
 	}
 	
 	public static final AmbientLight NONE = new AmbientLight(Color.BLACK, Double3.ZERO);
-
-	/**
-     * @return the intensity
-     */
-    public Color getIntensity() {
-        return intensity;
-    }
-
 }

@@ -12,7 +12,7 @@ import primitives.Ray;
  * @author ester & tzipora 😎
  *
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 	
 	private List<Intersectable> geometries;
 	
@@ -45,15 +45,16 @@ public class Geometries implements Intersectable {
 		}
 	}
 	
+	
 	@Override
-	public List<Point> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		
-        List<Point> result = null;
+        List<GeoPoint> result = null;
 
         //iterate over the list of the geometries and find the intersections for each one
         //add the results to list "result"
         for (Intersectable item : geometries) {
-            List<Point> intersection = item.findIntersections(ray);
+            List<GeoPoint> intersection = item.findGeoIntersectionsHelper(ray);
             if (intersection != null) {
                 if (result == null) {
                     result = new LinkedList<>();
@@ -63,8 +64,7 @@ public class Geometries implements Intersectable {
         }
         return result;
 	}
-	
-	
+
 
 	@Override
 	public int hashCode() {

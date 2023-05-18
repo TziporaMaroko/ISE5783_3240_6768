@@ -12,7 +12,7 @@ import primitives.Vector;
  * 
  * A plane is a flat surface that extends infinitely in all directions.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 	private final Point q0; // A point on the plane
 	private final Vector normal; // The plane's normal vector
 
@@ -72,7 +72,7 @@ public class Plane implements Geometry {
 	}
 	
 	@Override
-	public List<Point> findIntersections(Ray myRay) {
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray myRay) {
 		double nv = normal.dotProduct(myRay.getDir());
 		//The plane is parallel to the ray
 		if (Util.isZero(nv))
@@ -90,7 +90,7 @@ public class Plane implements Geometry {
 				return null;
 			}
 			
-			return List.of(myRay.getPoint(t));
+			return List.of(new GeoPoint(this,myRay.getPoint(t)));
 		}
 		catch(Exception ex) 
 		{

@@ -37,8 +37,8 @@ public class Triangle extends Polygon {
 	}
 	
 	@Override
-	public List<Point> findIntersections(Ray ray) {
-		List<Point> rayPoints = plane.findIntersections(ray);
+	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+		List<GeoPoint> rayPoints = plane.findGeoIntersectionsHelper(ray);
 		if (rayPoints == null)
 			return null;
 		//check if the point in out or on the triangle:
