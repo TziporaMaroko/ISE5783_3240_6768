@@ -44,5 +44,10 @@ public class SpotLight extends PointLight {
 
 		return super.getIntensity(p).scale(directionDotL); // the denominator from the super!!
 	}
+	
+	@Override
+	public double getDistance(Point p) {
+		return super.getDistance(p);
+	}
 
 }

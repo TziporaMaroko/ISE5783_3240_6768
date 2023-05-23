@@ -21,6 +21,7 @@ import scene.Scene;
  *
  */
 public class RayTracerBasic extends RayTracerBase {
+	private static final double DELTA = 0.1;
 
 	public RayTracerBasic(Scene scene) {
 		super(scene);
@@ -74,8 +75,11 @@ public class RayTracerBasic extends RayTracerBase {
 			Vector l = lightSource.getL(gp.point);
 			double nl = Util.alignZero(n.dotProduct(l));
 			if (nl * nv > 0) { // sign(nl) == sign(nv)
-				Color iL = lightSource.getIntensity(gp.point);
-				color = color.add(iL.scale(calcDiffusive(material, nl)), iL.scale(calcSpecular(material, n, l, nl, v)));
+				if (unshaded(gp, l, n, nv, lightSource)) {
+					Color iL = lightSource.getIntensity(gp.point);
+					color = color.add(iL.scale(calcDiffusive(material, nl)),
+							iL.scale(calcSpecular(material, n, l, nl, v)));
+				}
 			}
 		}
 		return color;
@@ -111,6 +115,23 @@ public class RayTracerBasic extends RayTracerBase {
 		double vr = Util.alignZero(v.dotProduct(r)); // vr=v*r
 		double vrnsh = Math.pow(Math.max(0, -vr), material.nShininess); // vrnsh=max(0,-vr)^nshininess
 		return material.kS.scale(vrnsh); // Ks * (max(0, - v * r) ^ Nsh) * Il
+	}
+
+	private boolean unshaded(GeoPoint gp, Vector l, Vector n, double nv, LightSource light) {
+		Vector lightDirection = l.scale(-1); // from point to light source
+		Vector epsVector = n.scale(nv < 0 ? DELTA : -DELTA);
+		Point point = gp.point.add(epsVector);
+		Ray lightRay = new Ray(point, lightDirection);
+		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+		if (intersections == null)
+			return true;
+		double lightDistance = light.getDistance(gp.point);
+		for (GeoPoint gp1 : intersections) {
+			if (Util.alignZero(gp1.point.distance(gp.point) - lightDistance) <= 0)
+					//&& gp1.geometry.getMaterial().kT == 0)
+				return false;
+		}
+		return true;
 	}
 
 }
