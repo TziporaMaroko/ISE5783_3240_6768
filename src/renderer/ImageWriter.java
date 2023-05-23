@@ -42,6 +42,7 @@ public class ImageWriter {
 
 		image = new BufferedImage(nX, nY, BufferedImage.TYPE_INT_RGB);
 	}
+	
 
 	// ***************** Getters/Setters ********************** //
 	/**

@@ -45,6 +45,9 @@ public class Sphere extends RadialGeometry {
 		return (p.subtract(center)).normalize();	
 	}
 	
+	/**Finds the intersection-geoPoints between a ray and the sphere represented by this object.
+	@param myRay The ray to intersect with the sphere.
+	@return A list of GeoPoints representing the intersection-geoPoints between the ray and the plsphereane**/
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
 		if (ray.getP0().equals(center)) // if the begin of the ray in the center, the point, is on the radius
@@ -55,7 +58,7 @@ public class Sphere extends RadialGeometry {
 		double th = Util.alignZero(Math.sqrt(radius*radius - d*d));
 		double t1 = Util.alignZero(tm+th);
 		double t2 = Util.alignZero(tm-th);
-		
+		 
 		
 		if (d > radius)//the ray is out of the sphere
 			return null; // there are no instructions

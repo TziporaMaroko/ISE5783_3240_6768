@@ -13,11 +13,23 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
 	protected Scene scene;
-	
+
+	/**
+	 * Constructs a RayTracerBase object with the specified scene.
+	 * 
+	 * @param scene The scene to be rendered.
+	 */
 	public RayTracerBase(Scene scene) {
-		this.scene= scene;
+		this.scene = scene;
 	}
-	
+
+	/**
+	 * Traces a ray and determines the color of the intersection point with the
+	 * scene.
+	 * 
+	 * @param ray The ray to be traced.
+	 * @return The color of the intersection point.
+	 */
 	public abstract Color traceRay(Ray ray);
-	
+
 }

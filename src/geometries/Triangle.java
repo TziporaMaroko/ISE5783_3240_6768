@@ -36,6 +36,9 @@ public class Triangle extends Polygon {
 		return super.getNormal(point);
 	}
 	
+	/**Finds the intersection-geoPoints between a ray and the triangle represented by this object.
+	@param myRay The ray to intersect with the triangle.
+	@return A list of GeoPoints representing the intersection-geoPoints between the ray and the triangle**/
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
 		List<GeoPoint> rayPoints = plane.findGeoIntersectionsHelper(ray);
@@ -50,7 +53,7 @@ public class Triangle extends Polygon {
 		Vector n2 = v2.crossProduct(v3).normalize();
 		Vector n3 = v3.crossProduct(v1).normalize();
 
-		
+		rayPoints.get(0).geometry=this;
 		//The point is inside if all  have the same sign (+/-)
 		
 		if (Util.alignZero(n1.dotProduct(ray.getDir())) > 0 && Util.alignZero(n2.dotProduct(ray.getDir())) > 0 && Util.alignZero(n3.dotProduct(ray.getDir())) > 0)

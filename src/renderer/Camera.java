@@ -112,7 +112,7 @@ public class Camera {
 	 * 
 	 * Throws an exception if the image writer or ray tracer is not set.
 	 */
-	public void renderImage() {
+	public Camera renderImage() {
 		// Check if the image writer is set
 		if (writer == null)
 			throw new MissingResourceException("This function must have values in all the fields", "ImageWriter",
@@ -133,6 +133,7 @@ public class Camera {
 				writer.writePixel(j, i, rayColor);
 			}
 		}
+		return this;
 	}
 
 	/**
@@ -245,6 +246,7 @@ public class Camera {
 	 */
 	public double getWidth() {
 		return width;
+		
 	}
 
 	/**

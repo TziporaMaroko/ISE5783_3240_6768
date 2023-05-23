@@ -71,6 +71,9 @@ public class Plane extends Geometry {
 		return getNormal();
 	}
 	
+	/**Finds the intersection-geoPoints between a ray and the plane represented by this object.
+	@param myRay The ray to intersect with the plane.
+	@return A list of GeoPoints representing the intersection-geoPoints between the ray and the plane**/
 	@Override
 	public List<GeoPoint> findGeoIntersectionsHelper(Ray myRay) {
 		double nv = normal.dotProduct(myRay.getDir());
@@ -89,7 +92,7 @@ public class Plane extends Geometry {
 			{
 				return null;
 			}
-			
+			 
 			return List.of(new GeoPoint(this,myRay.getPoint(t)));
 		}
 		catch(Exception ex) 
