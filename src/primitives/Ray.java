@@ -13,6 +13,7 @@ import geometries.Intersectable;
 public class Ray {
 	private final Point p0; // the starting point of the ray
 	private final Vector dir; // the direction vector of the ray, normalized
+	private static final double DELTA = 0.1;
 
 	/**
 	 * Constructs a new ray from a starting point and a direction vector.
@@ -24,7 +25,14 @@ public class Ray {
 		p0 = p;
 		dir = v.normalize();
 	}
-
+	
+	
+	public Ray(Point p, Vector v, Vector normal) {
+		dir = v.normalize();
+		Vector delta = normal.scale(normal.dotProduct(v) > 0 ? DELTA : -DELTA);// where we need to move the point if v and normal not in same direction
+		p0 = p.add(delta);
+	
+	}
 	/**
 	 * Returns the starting point of the ray.
 	 *
