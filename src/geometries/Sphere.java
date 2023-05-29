@@ -67,8 +67,12 @@ public class Sphere extends RadialGeometry {
 		if (t1 <=0 && t2<=0)//the ray begins after the sphere and goes to the opposite side
 			return null;
 		
+		
 		if (t1 > 0 && t2 >0)//2 intersections
+		{
+			//if(Util.alignZero(t1-maxDis)<=0&&Util.alignZero(t2-maxDis)<=0)
 			return List.of(new GeoPoint(this,ray.getPoint(t1)),new GeoPoint(this,ray.getPoint(t2)));
+		}
 		
 		if (t1 > 0)//p0 is in the sphere
 		{
