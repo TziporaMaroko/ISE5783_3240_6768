@@ -50,7 +50,6 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @return ray for refracted
 	 */
 	private Ray constructRefractedRay(Vector normal, Point point, Vector v) {
-		//Vector v = ray.getDir();
 		return new Ray(point, v, normal);
 	}
 
@@ -59,7 +58,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * 
 	 * @param normal Vector value
 	 * @param point  Point3D value
-	 * @param ray    Ray value
+	 * @param v    Vector value
 	 * @return ray for reflected
 	 */
 	private Ray constructReflectedRay(Vector normal, Point point, Vector v) {
@@ -76,17 +75,29 @@ public class RayTracerBasic extends RayTracerBase {
 	}
 
 	/**
-	 * Function for calculating a point color - recursive function
-	 * 
-	 * @param point Point value
-	 * @return Color
+	 * Recursive function for calculating the color of a point by considering local and global effects.
+	 *
+	 * @param intersection The intersection point on a geometry object.
+	 * @param ray          The ray that intersected the geometry object.
+	 * @param level        The current recursion level.
+	 * @param k            The accumulated transparency coefficient.
+	 * @return The color of the point.
 	 */
 	private Color calcColor(GeoPoint intersection, Ray ray, int level, Double3 k) {
 		Color color = calcLocalEffects(intersection, ray, k);
 		return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
 
 	}
-
+	
+	/**
+	 * Calculates the global effects on a point by considering reflections and refractions.
+	 *
+	 * @param gp    The intersection point on a geometry object.
+	 * @param ray   The ray that intersected the geometry object.
+	 * @param level The current recursion level.
+	 * @param k     The accumulated transparency coefficient.
+	 * @return The color of the global effects on the point.
+	 */
 	private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, Double3 k) {
 		Color color = Color.BLACK;
 		Vector v = ray.getDir();
@@ -96,6 +107,15 @@ public class RayTracerBasic extends RayTracerBase {
 				.add(calcColorGlobalEffect(constructRefractedRay(n,gp.point, v), level, k, material.kT));
 	}
 
+	/**
+	 * Calculates the color contribution from a reflected or refracted ray at a specific recursion level.
+	 *
+	 * @param ray   The reflected or refracted ray.
+	 * @param level The current recursion level.
+	 * @param k     The accumulated transparency coefficient.
+	 * @param kx    The material reflection or refraction coefficient.
+	 * @return The color contribution from the ray.
+	 */
 	private Color calcColorGlobalEffect(Ray ray, int level, Double3 k, Double3 kx) 
 	{
 		Double3 kkx = k.product(kx);
@@ -171,21 +191,32 @@ public class RayTracerBasic extends RayTracerBase {
 		double vrnsh = Math.pow(Math.max(0, -vr), material.nShininess); // vrnsh=max(0,-vr)^nshininess
 		return material.kS.scale(vrnsh); // Ks * (max(0, - v * r) ^ Nsh) * Il
 	}
+	
 
-	private boolean unshaded(GeoPoint gp, Vector l, Vector n, double nv, LightSource light) {
-		Vector lightDirection = l.scale(-1); // from point to light source
-		Ray lightRay = new Ray(gp.point, lightDirection,n);
-		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
-		if (intersections == null)
-			return true;
-		double lightDistance = light.getDistance(gp.point);
-		for (GeoPoint gp1 : intersections) {
-			if (Util.alignZero(gp1.point.distance(gp.point) - lightDistance) <= 0 && gp1.geometry.getMaterial().kT==Double3.ZERO)
-				return false;
-		}
-		return true;
-	}
+//	private boolean unshaded(GeoPoint gp, Vector l, Vector n, double nv, LightSource light) {
+//		Vector lightDirection = l.scale(-1); // from point to light source
+//		Ray lightRay = new Ray(gp.point, lightDirection,n);
+//		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+//		if (intersections == null)
+//			return true;
+//		double lightDistance = light.getDistance(gp.point);
+//		for (GeoPoint gp1 : intersections) {
+//			if (Util.alignZero(gp1.point.distance(gp.point) - lightDistance) <= 0 && gp1.geometry.getMaterial().kT==Double3.ZERO)
+//				return false;
+//		}
+//		return true;
+//	}
 
+	/**
+	 * Calculates the transparency coefficient of a point for a specific light source.
+	 *
+	 * @param gp     The intersection point on a geometry object.
+	 * @param l      The direction from the point to the light source.
+	 * @param n      The normal vector at the intersection point.
+	 * @param nv     The dot product between the normal vector and the direction to the viewer.
+	 * @param light  The light source.
+	 * @return The transparency coefficient of the point for the light source.
+	 */
 	private Double3 transparency(GeoPoint gp, Vector l, Vector n, double nv, LightSource light) {
 		Vector lightDirection = l.scale(-1); // from point to light source
 		Ray lightRay = new Ray(gp.point, lightDirection,n);

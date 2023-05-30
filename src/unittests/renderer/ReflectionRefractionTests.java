@@ -23,18 +23,15 @@ import scene.Scene;
 public class ReflectionRefractionTests {
    private Scene scene = new Scene("Test scene");
    
-   
+
+   /** Produce a picture of several spheres lighted by 2 spot lights */
    @Test
 	public void effectsTests() {
 		Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0));
 		camera.setVPDistance(1000).setVPSize(200,200);
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), new Double3(0.15)));
 		scene.geometries.add( //
-				//new Triangle(new Point(-150, 150, 115), new Point(150, 150, 135), new Point(75, -75, 150))
-				//.setEmission(new Color(java.awt.Color.magenta)).setMaterial(new Material().setkD(0).setkS(0.8).setShininess(6)), //
-				//new Triangle(new Point(-150, 150, 115), new Point(-70, -70, 140), new Point(75, -75, 150))
-				//.setEmission(new Color(java.awt.Color.magenta)).setMaterial(new Material().setkD(0).setkS(0.8).setShininess(80)),
-				new Sphere(new Point(50, 50, 30),10).setEmission(new Color(java.awt.Color.red))
+					new Sphere(new Point(50, 50, 30),10).setEmission(new Color(java.awt.Color.red))
 				.setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(30).setKt(0).setKr(0.2)), 
 				new Sphere(new Point(50, 50, 30),10).setEmission(new Color(java.awt.Color.BLACK))
                .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(40)), 
@@ -56,7 +53,7 @@ public class ReflectionRefractionTests {
 				.setKC(1).setKL(4E-4).setKQ(2E-5));
 		scene.lights.add(new SpotLight(new Color(700, 400, 400),new Point(300, 30,0), new Vector(-2, 3, 3))
 				.setKC(1).setKL(4E-4).setKQ(2E-5));
-		camera.setImageWriter(new ImageWriter("pool", 600, 600)) 
+		camera.setImageWriter(new ImageWriter("ballsInTheAir", 600, 600)) 
 		.setRayTracer(new RayTracerBasic(scene)); 
 camera.renderImage(); //
 camera.writeToImage();

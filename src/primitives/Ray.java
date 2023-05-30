@@ -25,14 +25,26 @@ public class Ray {
 		p0 = p;
 		dir = v.normalize();
 	}
-	
-	
+
+	/**
+	 * Constructs a new Ray object.
+	 *
+	 * @param p      The starting point of the ray.
+	 * @param v      The direction vector of the ray.
+	 * @param normal The normal vector.
+	 */
 	public Ray(Point p, Vector v, Vector normal) {
-		dir = v.normalize();
-		Vector delta = normal.scale(normal.dotProduct(v) > 0 ? DELTA : -DELTA);// where we need to move the point if v and normal not in same direction
-		p0 = p.add(delta);
-	
+		dir = v.normalize(); // Normalize the direction vector to ensure it has a unit length
+
+		// Calculate the delta vector based on the dot product of the normal and v
+		// vectors
+		// If normal and v are in the same direction, scale normal by DELTA, otherwise
+		// scale by -DELTA
+		Vector delta = normal.scale(normal.dotProduct(v) > 0 ? DELTA : -DELTA);
+
+		p0 = p.add(delta); // Move the starting point p by delta to get the updated starting point p0
 	}
+
 	/**
 	 * Returns the starting point of the ray.
 	 *
