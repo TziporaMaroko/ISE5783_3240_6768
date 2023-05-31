@@ -124,7 +124,7 @@ public class RayTracerBasic extends RayTracerBase {
 		GeoPoint gp = findClosestIntersection(ray);
 		if (gp == null) 
 			return scene.background.scale(kx);
-		return Util.isZero(gp.geometry.getNormal(gp.point).dotProduct(ray.getDir()))? Color.BLACK : calcColor(gp, ray, level - 1, kkx);
+		return Util.isZero(gp.geometry.getNormal(gp.point).dotProduct(ray.getDir()))? Color.BLACK : calcColor(gp, ray, level - 1, kkx).scale(kx);
 	}
 
 	/**
@@ -137,6 +137,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @return The color resulting from the local effects.
 	 */
 	private Color calcLocalEffects(GeoPoint gp, Ray ray, Double3 k) {
+		Double3 ddd=new Double3(MIN_CALC_COLOR_K);
 		Color color = gp.geometry.getEmission();
 		Vector v = ray.getDir();
 		Vector n = gp.geometry.getNormal(gp.point);
@@ -150,7 +151,7 @@ public class RayTracerBasic extends RayTracerBase {
 			if (nl * nv > 0) { // sign(nl) == sign(nv)
 				
 					Double3 ktr = transparency(gp,l,n,nv,lightSource);
-				if (!(ktr.product(k).lowerThan(MIN_CALC_COLOR_K)||ktr.product(k).equals(MIN_CALC_COLOR_K))) {
+				if (!(ktr.product(k).lowerThan(MIN_CALC_COLOR_K)||ktr.product(k).equals(ddd))) {
 					Color iL = lightSource.getIntensity(gp.point).scale(ktr);
 					color = color.add(iL.scale(calcDiffusive(material, nl)),
 							iL.scale(calcSpecular(material, n, l, nl, v)));
@@ -169,7 +170,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @param lightIntensity the intensity of the light source at this point
 	 * @return the color of the diffusive
 	 */
-	private Double3 calcDiffusive(Material material, double nl) {
+	private static Double3 calcDiffusive(Material material, double nl) {
 		nl = Math.abs(nl);
 		return material.kD.scale(nl); // Kd * |l * n| * Il
 	}
