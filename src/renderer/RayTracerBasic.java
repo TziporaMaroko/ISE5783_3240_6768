@@ -107,6 +107,25 @@ public class RayTracerBasic extends RayTracerBase {
 				.add(calcColorGlobalEffect(constructRefractedRay(n,gp.point, v), level, k, material.kT));
 	}
 
+	  /**
+		  * @param rays List of surrounding rays
+		  * @return average color
+		  */
+		 public Color traceRay(List<Ray> rays) 
+		 {
+		 	if(rays == null)
+		 		return scene.background;
+		     Color color = scene.background;//fix
+		     for (Ray ray : rays) 
+		     {
+		     	color = color.add(traceRay(ray));
+		     }
+		     color = color.add(scene.ambientLight.getIntensity());
+		     int size = rays.size();
+		     return color.reduce(size);
+		
+		 }
+		
 	/**
 	 * Calculates the color contribution from a reflected or refracted ray at a specific recursion level.
 	 *
