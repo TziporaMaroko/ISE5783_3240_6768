@@ -15,7 +15,7 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
 	protected Scene scene;
-
+ 
 	/**
 	 * Constructs a RayTracerBase object with the specified scene.
 	 * 

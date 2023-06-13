@@ -113,7 +113,7 @@ public class RayTracerBasic extends RayTracerBase {
 		  */
 		 public Color traceRay(List<Ray> rays) 
 		 {
-		 	if(rays == null)
+		 	if(rays == null) 
 		 		return scene.background;
 		     Color color = scene.background;//fix
 		     for (Ray ray : rays) 

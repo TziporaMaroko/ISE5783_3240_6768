@@ -36,12 +36,7 @@ public class Camera {
 	private ImageWriter writer;
 	private RayTracerBase rayTracer;
 	private int numOfRays=1024;
-	
-	/**
-     * numOfRaysForSuperSampling - number of rays for super sampling
-     */
-    private int maxRaysForSuperSampling = 1050;
-	
+		
 	/**
 	 * 
 	 * Constructs a new camera.
@@ -292,7 +287,9 @@ public class Camera {
 
         for (int row = 0; row < numOfRays; ++row) {//foreach place in the pixel grid
             for (int column = 0; column < numOfRays; ++column) {
-                sample_rays.add(constructRaysThroughPixel(PRy,PRx,Yi, Xj, row, column));//add the ray
+            	double jitterX = (Math.random() - 0.5) * PRx; // Random jitter in the x direction
+                double jitterY = (Math.random() - 0.5) * PRy; // Random jitter in the y direction
+                sample_rays.add(constructRaysThroughPixel(PRy,PRx,Yi, Xj, row, column,jitterX,jitterY));//add the ray
             }
         }
         sample_rays.add(constructRay(nX, nY, j, i));//add the center screen ray
@@ -311,11 +308,12 @@ public class Camera {
      * @param distance distance of screen from camera
      * @return beam of rays through pixel
      */
-    private Ray constructRaysThroughPixel(double Ry,double Rx, double yi, double xj, int j, int i){
+    private Ray constructRaysThroughPixel(double Ry,double Rx, double yi, double xj, int j, int i,double jitterX,double jitterY ){
         Point Pc = p0.add(vTo.scale(distance)); //the center of the screen point
+        
+        double x_sample_j = (j * Rx + Rx / 2d) + jitterX; // Add jitter to the x coordinate
+        double y_sample_i = (i * Ry + Ry / 2d) + jitterY; // Add jitter to the y coordinate
 
-        double y_sample_i =  (i *Ry + Ry/2d); //The pixel middle point on the y axis
-        double x_sample_j=   (j *Rx + Rx/2d); //The pixel middle point on the x axis
 
         Point Pij = Pc; //The point at the pixel through which a beam is fired
         //Moving the point through which a beam is fired on the x axis
