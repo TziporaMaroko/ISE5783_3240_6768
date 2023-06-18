@@ -35,7 +35,7 @@ public class Camera {
 
 	private ImageWriter writer;
 	private RayTracerBase rayTracer;
-	private int numOfRays=1024;
+	private int numOfRays=10;
 		
 	/**
 	 * 
