@@ -76,6 +76,25 @@ public class FinalImageTest {
         Sphere mickeyRightEar = (Sphere) new Sphere(new Point(-20, -30, 50), 15)
                 .setEmission(new Color(java.awt.Color.BLACK))
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(40));
+        
+     // Sunglasses (brown polygons)
+        Polygon mickeyGlasses1 = (Polygon) new Polygon(
+                new Point(-50, -20, -40),
+                new Point(-20, -20, -40),
+                new Point(-20, 0, -40),
+                new Point(-40, 0, -40)
+        ).setEmission(new Color(java.awt.Color.BLACK))
+                .setMaterial(new Material().setkD(0.5).setkS(0.3).setShininess(200).setKt(0.2).setKr(0));
+        scene.geometries.add(mickeyGlasses1);
+
+        Polygon mickeyGlasses2 = (Polygon) new Polygon(
+                new Point(-50, -20, -40),
+                new Point(-80, -20, -40),
+                new Point(-80, 0, -40),
+                new Point(-60, 0, -40)
+        ).setEmission(new Color(java.awt.Color.BLACK))
+                .setMaterial(new Material().setkD(0.5).setkS(0.3).setShininess(200).setKt(0.2).setKr(0.3));
+        scene.geometries.add(mickeyGlasses2);
         scene.geometries.add(mickeyRightEar);
 
         // Props in the background
@@ -85,7 +104,7 @@ public class FinalImageTest {
                 new Point(-105, -50, 100),
                 new Point(-110, 200, 100),
                 new Point(-90, 200, 100)
-        ).setEmission(new Color(139, 69, 19))
+        ).setEmission(new Color(92, 64, 51))
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(10));
         scene.geometries.add(treeTrunk);
 
@@ -94,7 +113,7 @@ public class FinalImageTest {
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(40));
         scene.geometries.add(treeLeaves);
 
-        // Example: Cloud
+        // Cloud
         Sphere cloud1 = (Sphere) new Sphere(new Point(-30, -120, 0), 50)
                 .setEmission(new Color(255, 255, 255))
                 .setMaterial(new Material().setkD(0.5).setkS(0.5).setShininess(40));
