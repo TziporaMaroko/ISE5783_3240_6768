@@ -21,7 +21,8 @@ public class FinalImageTest {
     @Test
     public void createInterestingMice() {
         Camera camera = new Camera(new Point(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0));
-        camera.setVPDistance(1000).setVPSize(200, 200);
+        camera.setVPDistance(1000).setVPSize(200, 200).setNumOfRays(10)//
+		.setMultithreading(4).setDebugPrint(0.1).setAdaptiveSuperSamplingFlag(true);
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), new Double3(0.15)))
                 .setBackground(new Color(200, 230, 255));
 
